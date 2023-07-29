@@ -1,3 +1,7 @@
+# Student Management System
+
+## importing mudules
+```javascript
 const express = require("express");
 const fs = require("fs");
 const path = "/api/v1";
@@ -9,6 +13,9 @@ let batches = JSON.parse(fs.readFileSync("batches.json", "utf-8"));
 app.listen(4000, "127.0.0.1", () => {
   console.log("server started....");
 });
+```
+## Get All Students
+```javascript
 const getAllStudentd = (req, res) => {
   let response = {
     status: "success",
@@ -16,6 +23,9 @@ const getAllStudentd = (req, res) => {
   };
   res.status(200).json(response);
 };
+```
+## Get All Teachers
+```javascript
 const getAllTeachers = (req, res) => {
   let response = {
     status: "success",
@@ -30,6 +40,9 @@ const getAllBatches = (req, res) => {
   };
   res.status(200).json(response);
 };
+```
+## Create Student
+```javascript
 const createStudent = (req, res) => {
   let body = req.body;
   let id = students[students.length - 1].id + 1;
@@ -38,6 +51,11 @@ const createStudent = (req, res) => {
   fs.writeFileSync("students.json", JSON.stringify(students), "utf-8");
   res.send("created");
 };
+```
+
+
+## Create Teacher
+```javascript
 const createTeacher = (req, res) => {
   let body = req.body;
   let id = teachers[teachers.length - 1].id + 1;
@@ -46,6 +64,9 @@ const createTeacher = (req, res) => {
   fs.writeFileSync("teachers.json", JSON.stringify(students), "utf-8");
   res.send("created");
 };
+```
+## Create Bulk Students
+```javascript
 const createBulkStudent = (req, res) => {
   let body = req.body;
   for (let student of body) {
@@ -56,6 +77,9 @@ const createBulkStudent = (req, res) => {
   fs.writeFileSync("students.json", JSON.stringify(students), "utf-8");
   res.send("created");
 };
+```
+## Create Bulk Teachers
+```javascript
 const createBulkTeacher = (req, res) => {
   let body = req.body;
   for (let teacher of body) {
@@ -66,7 +90,9 @@ const createBulkTeacher = (req, res) => {
   fs.writeFileSync("teachers.json", JSON.stringify(teachers), "utf-8");
   res.send("created");
 };
-
+```
+## Get Student By ID
+```javascript
 const getStudentByID = (req, res) => {
   let id = req.params.id * 1;
   let student = students.filter((student) => {
@@ -84,6 +110,9 @@ const getStudentByID = (req, res) => {
     data: { student: student[0] },
   });
 };
+```
+## Get Teacher By ID
+```javascript
 const getTeacherByID = (req, res) => {
   let id = req.params.id * 1;
   let teacher = teachers.filter((teacher) => {
@@ -101,7 +130,9 @@ const getTeacherByID = (req, res) => {
     data: { teacher: teacher[0] },
   });
 };
-
+```
+## Update Student By ID
+```javascript
 const updateStudentByID = (req, res) => {
   let id = req.params.id * 1;
   let index = students.findIndex((student) => {
@@ -111,6 +142,9 @@ const updateStudentByID = (req, res) => {
   fs.writeFileSync("students.json", JSON.stringify(students), "utf-8");
   res.send("sent");
 };
+```
+## Update Teacher By ID
+```javascript
 const updateTeacherByID = (req, res) => {
   let id = req.params.id * 1;
   let index = teachers.findIndex((teacher) => {
@@ -120,7 +154,9 @@ const updateTeacherByID = (req, res) => {
   fs.writeFileSync("teachers.json", JSON.stringify(teachers), "utf-8");
   res.send("sent");
 };
-
+```
+## Delete Student By ID
+```javascript
 const deleteStudentByID = (req, res) => {
   let id = req.params.id * 1;
   let index = students.findIndex((student) => {
@@ -131,6 +167,9 @@ const deleteStudentByID = (req, res) => {
   fs.writeFileSync("students.json", JSON.stringify(students), "utf-8");
   res.send("deleted");
 };
+```
+## Delete Teacher By ID
+```javascript
 const deleteTeacherByID = (req, res) => {
   let id = req.params.id * 1;
   let index = teachers.findIndex((teacher) => {
@@ -141,7 +180,9 @@ const deleteTeacherByID = (req, res) => {
   fs.writeFileSync("teachers.json", JSON.stringify(teachers), "utf-8");
   res.send("deleted");
 };
-
+```
+## Update Bulk Students By ID's
+```javascript
 const updateBulkStudentsByID = (req, res) => {
   let body = req.body;
   for (let value of body) {
@@ -153,7 +194,9 @@ const updateBulkStudentsByID = (req, res) => {
     fs.writeFileSync("students.json", JSON.stringify(students), "utf-8");
   }
 };
-
+```
+## Update Bulk Teachers By ID's
+```javascript
 const updateBulkTeachersByID = (req, res) => {
   let body = req.body;
   for (let value of body) {
@@ -165,21 +208,10 @@ const updateBulkTeachersByID = (req, res) => {
     fs.writeFileSync("teachers.json", JSON.stringify(teachers), "utf-8");
   }
 };
+```
 
-const deleteBulkStudentsByID = (req, res) => {
-  const ids = Number(req.params.id);
-  // ids.split(",")
-  console.log(ids[1]);
-  // console.log(ids[1]);
-  for (let id of ids) {
-    // console.log(id);
-    let index = students.findIndex((student) => {
-      return student.id === id;
-    });
-    students.splice(index, 1);
-  }
-  fs.writeFileSync("students.json", JSON.stringify(students), "utf-8");
-};
+## URLs
+```javascript
 
 app.get(`${path}/students`, getAllStudentd);
 app.get(`${path}/teachers`, getAllTeachers);
@@ -196,3 +228,4 @@ app.delete(`${path}/teachers/:id`, deleteTeacherByID);
 app.put(`${path}/studentss/bulk`, updateBulkStudentsByID);
 app.put(`${path}/teacherss/bulk`, updateBulkTeachersByID);
 app.delete(`${path}/students/:id`, deleteBulkStudentsByID);
+```
